@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Convertidores –  Por Zuri Saday Bonilla Lazcano</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --rose-light: #fce4ec;
+      --rose-mid:   #f8bbd0;
+      --rose-pale:  #fdf0f5;
+      --rose-vivid: #e91e8c;
+      --rose-hot:   #f06292;
+      --rose-deep:  #c2185b;
+      --rose-accent:#ff4081;
+      --white:      #ffffff;
+      --text-dark:  #3d1a2e;
+      --text-mid:   #7b3b5e;
+      --text-soft:  #b87090;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--rose-pale);
+      color: var(--text-dark);
+      line-height: 1.75;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      background: linear-gradient(135deg, #f8bbd0 0%, #fce4ec 40%, #f48fb1 70%, #e91e8c22 100%);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 30%, #f06292aa 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 70%, #e91e8c55 0%, transparent 55%);
+      z-index: 0;
+    }
+
+    .hero-circles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-circles span {
+      position: absolute;
+      border-radius: 50%;
+      opacity: .18;
+      animation: float 7s ease-in-out infinite;
+    }
+    .hero-circles span:nth-child(1){ width:340px;height:340px;background:var(--rose-vivid);top:-80px;left:-80px;animation-delay:0s;}
+    .hero-circles span:nth-child(2){ width:200px;height:200px;background:var(--rose-hot);bottom:10%;right:5%;animation-delay:2s;}
+    .hero-circles span:nth-child(3){ width:150px;height:150px;background:var(--rose-deep);top:40%;left:60%;animation-delay:4s;}
+    @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-22px);}}
+
+    .hero-content { position: relative; z-index: 1; max-width: 800px; padding: 2rem; }
+
+    .hero-logo {
+      width: 140px;
+      height: auto;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px #e91e8c44;
+      margin-bottom: 1.5rem;
+      background: white;
+      padding: 8px;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      color: var(--rose-deep);
+      line-height: 1.15;
+      margin-bottom: .5rem;
+      text-shadow: 2px 2px 8px #fce4ec;
+    }
+    .hero h1 em {
+      color: var(--rose-vivid);
+      font-style: italic;
+    }
+
+    .hero-author {
+      font-size: 1.05rem;
+      color: var(--text-mid);
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--text-mid);
+      max-width: 580px;
+      margin: 0 auto 2.2rem;
+    }
+
+    .scroll-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--rose-vivid), var(--rose-deep));
+      color: white;
+      padding: .85rem 2.4rem;
+      border-radius: 50px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-decoration: none;
+      box-shadow: 0 6px 24px #e91e8c55;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .scroll-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 32px #e91e8c88; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 99;
+      background: rgba(252,228,236,.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 2px solid var(--rose-mid);
+      display: flex;
+      justify-content: center;
+      gap: .5rem;
+      flex-wrap: wrap;
+      padding: .7rem 1rem;
+    }
+    nav a {
+      color: var(--rose-deep);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: .82rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: .4rem .9rem;
+      border-radius: 50px;
+      transition: background .2s, color .2s;
+    }
+    nav a:hover { background: var(--rose-vivid); color: white; }
+
+    /* ── LAYOUT ── */
+    .container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      text-align: center;
+      padding: 4.5rem 1rem 1.5rem;
+    }
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--rose-deep);
+      margin-bottom: .5rem;
+    }
+    .section-header p {
+      color: var(--text-soft);
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .divider {
+      width: 60px; height: 4px;
+      background: linear-gradient(90deg, var(--rose-vivid), var(--rose-hot));
+      border-radius: 4px;
+      margin: 1rem auto 0;
+    }
+
+    /* ── ARTICLE CARD ── */
+    .article {
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px #f8bbd055;
+      margin-bottom: 3.5rem;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .article:hover { transform: translateY(-4px); box-shadow: 0 12px 40px #f8bbd088; }
+
+    /* Hero image for each article with blur overlay */
+    .article-hero {
+      position: relative;
+      height: 320px;
+      overflow: hidden;
+    }
+    .article-hero img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(.75) saturate(1.1);
+      transition: transform .4s;
+    }
+    .article:hover .article-hero img { transform: scale(1.04); }
+    .article-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 30%, rgba(194,24,91,.62) 100%);
+      display: flex;
+      align-items: flex-end;
+      padding: 1.8rem;
+    }
+    .article-hero-overlay h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: white;
+      text-shadow: 0 2px 12px rgba(0,0,0,.45);
+    }
+
+    .article-body { padding: 2rem 2.2rem 2.4rem; }
+    .tag {
+      display: inline-block;
+      background: var(--rose-light);
+      color: var(--rose-deep);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .28rem .8rem;
+      border-radius: 50px;
+      margin-bottom: .8rem;
+    }
+    .article-body p { color: var(--text-mid); margin-bottom: 1rem; font-size: 1rem; }
+    .article-body h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--rose-deep);
+      margin: 1.4rem 0 .5rem;
+    }
+
+    /* inline image inside article */
+    .article-img-row {
+      display: flex;
+      gap: 1rem;
+      margin: 1.4rem 0;
+      flex-wrap: wrap;
+    }
+    .article-img-row figure {
+      flex: 1;
+      min-width: 200px;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 3px 14px #f8bbd066;
+    }
+    .article-img-row figure img {
+      width: 100%; height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+    .article-img-row figcaption {
+      font-size: .78rem;
+      color: var(--text-soft);
+      text-align: center;
+      padding: .4rem .6rem;
+      background: var(--rose-pale);
+    }
+
+    /* highlight box */
+    .highlight-box {
+      background: linear-gradient(135deg, var(--rose-light), #fde8f0);
+      border-left: 4px solid var(--rose-vivid);
+      border-radius: 0 12px 12px 0;
+      padding: 1.1rem 1.4rem;
+      margin: 1.4rem 0;
+      color: var(--text-dark);
+      font-size: .97rem;
+    }
+
+    /* formula box */
+    .formula {
+      background: #3d1a2e;
+      color: #f8bbd0;
+      border-radius: 12px;
+      padding: 1rem 1.6rem;
+      font-family: 'Courier New', monospace;
+      font-size: .97rem;
+      margin: 1.2rem 0;
+      overflow-x: auto;
+    }
+
+    /* ── FULL-WIDTH BANNER WITH BLUR ── */
+    .banner-section {
+      position: relative;
+      min-height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      margin: 3rem 0;
+    }
+    .banner-bg {
+      position: absolute;
+      inset: 0;
+    }
+    .banner-bg img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: blur(6px) brightness(.6) saturate(1.2);
+      transform: scale(1.07);
+    }
+    .banner-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(233,30,140,.55), rgba(194,24,91,.4));
+    }
+    .banner-text {
+      position: relative;
+      z-index: 1;
+      color: white;
+      padding: 2.5rem 2rem;
+      max-width: 720px;
+    }
+    .banner-text h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      margin-bottom: .8rem;
+      text-shadow: 0 2px 12px rgba(0,0,0,.4);
+    }
+    .banner-text p {
+      font-size: 1.05rem;
+      opacity: .9;
+      text-shadow: 0 1px 6px rgba(0,0,0,.3);
+    }
+
+    /* ── TABLE ── */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.4rem 0;
+      border-radius: 12px;
+      overflow: hidden;
+      font-size: .92rem;
+    }
+    .comparison-table th {
+      background: linear-gradient(90deg, var(--rose-vivid), var(--rose-deep));
+      color: white;
+      padding: .75rem 1rem;
+      text-align: left;
+      font-weight: 700;
+    }
+    .comparison-table td {
+      padding: .65rem 1rem;
+      border-bottom: 1px solid var(--rose-light);
+      color: var(--text-mid);
+    }
+    .comparison-table tr:nth-child(even) td { background: var(--rose-pale); }
+    .comparison-table tr:last-child td { border-bottom: none; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--rose-deep);
+      color: #fce4ec;
+      text-align: center;
+      padding: 3rem 1.5rem;
+      margin-top: 4rem;
+    }
+    footer .footer-logo { width: 90px; margin-bottom: 1rem; background: white; border-radius: 10px; padding: 6px; }
+    footer h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: .4rem; }
+    footer p { font-size: .9rem; opacity: .8; }
+
+    /* ── SCROLL PROGRESS ── */
+    #progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 4px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--rose-vivid), var(--rose-accent));
+      z-index: 999;
+      transition: width .1s;
+    }
+
+    @media (max-width: 600px) {
+      .article-body { padding: 1.4rem 1.2rem; }
+      .article-hero { height: 220px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<!-- ── HERO ── -->
+<header class="hero">
+  <div class="hero-circles">
+    <span></span><span></span><span></span>
+  </div>
+  <div class="hero-content">
+    <img
+      class="hero-logo"
+      src="https://i.postimg.cc/ZRSt6K3F/LOGOTIPO-HORIZONTAL-Mesa-de-trabajo-1-768x994.png"
+      alt="Logotipo Zuri Saday Bonilla Lazcano"
+    />
+    <p class="hero-author">por Zuri Saday Bonilla Lazcano</p>
+    <h1>Convertidores en la <em>Ingeniería en Sistemas</em> Computacionales</h1>
+    <p class="hero-sub">
+      Una guía completa sobre los tipos de convertidores que sustentan el mundo digital:
+      señales, potencia, protocolos y más.
+    </p>
+    <a href="#intro" class="scroll-btn">Comenzar lectura ↓</a>
+  </div>
+</header>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#adc-dac">ADC / DAC</a>
+  <a href="#dc-dc">DC–DC</a>
+  <a href="#ac-dc">AC–DC</a>
+  <a href="#protocolos">Protocolos</a>
+  <a href="#numericos">Numéricos</a>
+  <a href="#aplicaciones">Aplicaciones</a>
+</nav>
+
+<!-- ── INTRO ── -->
+<section id="intro">
+  <div class="container">
+    <div class="section-header">
+      <h2>¿Qué es un convertidor?</h2>
+      <div class="divider"></div>
+      <p>
+        En ingeniería en sistemas computacionales, un <strong>convertidor</strong> es cualquier dispositivo
+        o algoritmo que transforma una magnitud, señal o formato en otro equivalente, permitiendo que
+        distintos subsistemas se comuniquen, procesen y operen en armonía.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── BANNER 1 ── -->
+<div class="banner-section">
+  <div class="banner-bg">
+    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1400&q=80" alt="circuitos electrónicos"/>
+  </div>
+  <div class="banner-overlay"></div>
+  <div class="banner-text">
+    <h2>El puente entre el mundo analógico y el digital</h2>
+    <p>
+      Sin los convertidores, los microcontroladores, CPUs y FPGAs no podrían interactuar
+      con sensores, motores, redes o pantallas. Son la columna vertebral de los sistemas embebidos
+      y de cómputo moderno.
+    </p>
+  </div>
+</div>
+
+<!-- ── ARTÍCULO 1: ADC/DAC ── -->
+<section id="adc-dac">
+  <div class="container">
+    <div class="section-header">
+      <h2>1. Convertidores Analógico–Digital y Digital–Analógico</h2>
+      <div class="divider"></div>
+    </div>
+    <article class="article">
+      <div class="article-hero">
+        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=900&q=80" alt="ADC DAC señales"/>
+        <div class="article-hero-overlay">
+          <h3>ADC &amp; DAC – La traducción entre dos mundos</h3>
+        </div>
+      </div>
+      <div class="article-body">
+        <span class="tag">Señal</span>
+        <p>
+          El <strong>Convertidor Analógico-Digital (ADC)</strong> toma una señal continua del mundo real
+          —temperatura, presión, audio, luz— y la discretiza en una secuencia de números binarios que
+          la computadora puede procesar. Parámetros clave:
+        </p>
+        <ul style="margin-left:1.4rem;color:var(--text-mid);margin-bottom:1rem;">
+          <li><strong>Resolución</strong> – número de bits (8, 12, 16, 24 bits).</li>
+          <li><strong>Frecuencia de muestreo</strong> – teorema de Nyquist: f<sub>s</sub> ≥ 2·f<sub>max</sub>.</li>
+          <li><strong>Linealidad</strong> – error diferencial (DNL) e integral (INL).</li>
+        </ul>
+        <div class="formula">
+          Vout_digital = round( Vin / Vref × (2ⁿ − 1) )
+        </div>
+        <h4>Tipos de ADC</h4>
+        <div class="article-img-row">
+          <figure>
+            <img src="https://images.unsplash.com/photo-1593941707882-a5bba53ad1a1?w=600&q=80" alt="ADC sar"/>
+            <figcaption>ADC de aproximación sucesiva (SAR)</figcaption>
+          </figure>
+          <figure>
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80" alt="ADC sigma delta"/>
+            <figcaption>ADC Sigma-Delta (audio de alta resolución)</figcaption>
+          </figure>
+          <figure>
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="ADC flash"/>
+            <figcaption>ADC Flash (ultra rápido, osciloscópios)</figcaption>
+          </figure>
+        </div>
+        <p>
+          El <strong>Convertidor Digital-Analógico (DAC)</strong> realiza el proceso inverso: convierte
+          datos binarios en voltajes o corrientes analógicas. Es fundamental en síntesis de audio,
+          generadores de señal y actuadores.
+        </p>
+        <div class="highlight-box">
+          💡 <strong>Aplicación real:</strong> En un sistema embebido con STM32, el ADC de 12 bits
+          muestrea un sensor de temperatura a 1 kHz; los datos se procesan con un filtro digital FIR
+          y el resultado se envía al DAC para modular un ventilador analógico.
+        </div>
+        <table class="comparison-table">
+          <thead>
+            <tr><th>Parámetro</th><th>ADC SAR</th><th>ADC Sigma-Delta</th><th>ADC Flash</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Resolución típica</td><td>8–18 bits</td><td>16–24 bits</td><td>6–8 bits</td></tr>
+            <tr><td>Velocidad</td><td>Media</td><td>Baja–Media</td><td>Muy alta</td></tr>
+            <tr><td>Consumo</td><td>Bajo</td><td>Medio</td><td>Alto</td></tr>
+            <tr><td>Uso típico</td><td>Sensores, MCU</td><td>Audio, instrumentación</td><td>Radar, RF</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ── ARTÍCULO 2: DC-DC ── -->
+<section id="dc-dc">
+  <div class="container">
+    <div class="section-header">
+      <h2>2. Convertidores DC–DC</h2>
+      <div class="divider"></div>
+      <p>Regulan la tensión continua para alimentar cada subsistema con exactamente lo que necesita.</p>
+    </div>
+    <article class="article">
+      <div class="article-hero">
+        <img src="https://images.unsplash.com/photo-1504664314710-ab4d8ecc9ad2?w=900&q=80" alt="fuente de alimentación DC"/>
+        <div class="article-hero-overlay">
+          <h3>Buck, Boost y Buck-Boost – Gestión de energía</h3>
+        </div>
+      </div>
+      <div class="article-body">
+        <span class="tag">Potencia</span>
+        <p>
+          Los convertidores DC-DC conmutados son omnipresentes en laptops, teléfonos y sistemas
+          embebidos. Funcionan mediante un transistor que conmuta a alta frecuencia (50 kHz – 10 MHz),
+          almacenando energía en un inductor o condensador.
+        </p>
+        <h4>Topologías principales</h4>
+        <div class="article-img-row">
+          <figure>
+            <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80" alt="Buck converter"/>
+            <figcaption>Convertidor Buck (reductor de voltaje)</figcaption>
+          </figure>
+          <figure>
+            <img src="https://images.unsplash.com/photo-1555664424-778a1e5e1b48?w=600&q=80" alt="Boost converter"/>
+            <figcaption>Convertidor Boost (elevador de voltaje)</figcaption>
+          </figure>
+        </div>
+        <div class="formula">
+          Buck:  Vout = D × Vin          (D = ciclo de trabajo, 0 &lt; D &lt; 1)
+          Boost: Vout = Vin / (1 − D)
+        </div>
+        <p>
+          En un sistema computacional (Raspberry Pi, Arduino, FPGA Xilinx), el convertidor Buck
+          se encarga de bajar los 12 V del bus a los 3.3 V o 1.8 V que necesita el procesador,
+          con eficiencias superiores al 92%.
+        </p>
+        <div class="highlight-box">
+          🔋 <strong>Dato clave:</strong> La mayoría de las tarjetas madre PC utilizan un VRM
+          (Voltage Regulator Module) multifásico basado en convertidores Buck para entregar de manera
+          estable los 1.2 V necesarios por los núcleos de la CPU.
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ── BANNER 2 ── -->
+<div class="banner-section">
+  <div class="banner-bg">
+    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1400&q=80" alt="programación sistemas"/>
+  </div>
+  <div class="banner-overlay"></div>
+  <div class="banner-text">
+    <h2>La eficiencia energética importa</h2>
+    <p>
+      Con millones de dispositivos IoT y centros de datos consumiendo energía a escala global,
+      diseñar convertidores de alta eficiencia es una de las contribuciones más impactantes
+      de la ingeniería en sistemas computacionales.
+    </p>
+  </div>
+</div>
+
+<!-- ── ARTÍCULO 3: AC-DC ── -->
+<section id="ac-dc">
+  <div class="container">
+    <div class="section-header">
+      <h2>3. Convertidores AC–DC (Rectificadores)</h2>
+      <div class="divider"></div>
+    </div>
+    <article class="article">
+      <div class="article-hero">
+        <img src="https://images.unsplash.com/photo-1563299796-17596ed6b017?w=900&q=80" alt="fuente de poder"/>
+        <div class="article-hero-overlay">
+          <h3>Rectificadores y Fuentes Conmutadas (SMPS)</h3>
+        </div>
+      </div>
+      <div class="article-body">
+        <span class="tag">Alimentación</span>
+        <p>
+          Toda computadora comienza con un convertidor AC-DC que transforma los 110–220 V de la
+          red eléctrica en tensiones continuas de trabajo. Los <strong>SMPS (Switched-Mode Power Supply)</strong>
+          modernos son compactos, eficientes y regulados.
+        </p>
+        <h4>Etapas de un SMPS</h4>
+        <ul style="margin-left:1.4rem;color:var(--text-mid);margin-bottom:1rem;">
+          <li>1. <strong>Filtrado EMI</strong> – elimina ruido de la red.</li>
+          <li>2. <strong>Rectificación</strong> – puente de diodos convierte AC en DC pulsante.</li>
+          <li>3. <strong>Filtrado bulk</strong> – condensador electrolítico suaviza la onda.</li>
+          <li>4. <strong>Convertidor DC-DC aislado</strong> – topología flyback, forward o LLC.</li>
+          <li>5. <strong>Regulación PWM</strong> – lazo de control mantiene voltaje estable.</li>
+        </ul>
+        <div class="article-img-row">
+          <figure>
+            <img src="https://images.unsplash.com/photo-1573408301185-9519f94816b5?w=600&q=80" alt="fuente ATX"/>
+            <figcaption>Fuente ATX: SMPS de una PC de escritorio</figcaption>
+          </figure>
+          <figure>
+            <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&q=80" alt="laptop cargador"/>
+            <figcaption>Cargador GaN para laptop (alta densidad de potencia)</figcaption>
+          </figure>
+        </div>
+        <div class="highlight-box">
+          ⚡ Los cargadores USB-C PD modernos con transistores GaN (Nitruro de Galio) alcanzan
+          eficiencias del 96%, siendo hasta 3× más pequeños que los diseños de silicio equivalentes.
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ── ARTÍCULO 4: PROTOCOLOS ── -->
+<section id="protocolos">
+  <div class="container">
+    <div class="section-header">
+      <h2>4. Convertidores de Protocolo y Bus</h2>
+      <div class="divider"></div>
+      <p>Permiten que dispositivos con distintos estándares de comunicación interoperen.</p>
+    </div>
+    <article class="article">
+      <div class="article-hero">
+        <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=900&q=80" alt="redes comunicaciones"/>
+        <div class="article-hero-overlay">
+          <h3>UART, SPI, I²C, USB, CAN y más</h3>
+        </div>
+      </div>
+      <div class="article-body">
+        <span class="tag">Comunicaciones</span>
+        <p>
+          En sistemas embebidos y de cómputo, los <strong>convertidores de protocolo</strong> son
+          circuitos integrados o IP cores que realizan la traducción entre buses y estándares:
+        </p>
+        <table class="comparison-table">
+          <thead>
+            <tr><th>Conversión</th><th>Chip típico</th><th>Aplicación</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>USB ↔ UART</td><td>CP2102, CH340</td><td>Debug de microcontroladores</td></tr>
+            <tr><td>I²C ↔ SPI</td><td>SC18IS602</td><td>Sensores en sistemas embebidos</td></tr>
+            <tr><td>LVDS ↔ CMOS</td><td>SN65LVDS</td><td>Pantallas, cámaras</td></tr>
+            <tr><td>CAN ↔ USB</td><td>PCAN-USB</td><td>Automoción, industria</td></tr>
+            <tr><td>PCIe ↔ USB3</td><td>ASM1042</td><td>Expansión de puertos</td></tr>
+            <tr><td>HDMI ↔ DisplayPort</td><td>PS176</td><td>Monitores y adaptadores</td></tr>
+          </tbody>
+        </table>
+        <div class="article-img-row">
+          <figure>
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80" alt="placa circuito"/>
+            <figcaption>Convertidor USB-UART en placa de desarrollo</figcaption>
+          </figure>
+          <figure>
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="cables bus"/>
+            <figcaption>Buses de comunicación industrial</figcaption>
+          </figure>
+        </div>
+        <h4>Convertidores de nivel lógico</h4>
+        <p>
+          Cuando un módulo opera a 5 V y el MCU a 3.3 V, se necesita un <em>level shifter</em> como
+          el TXS0108E (bidireccional automático) para evitar daños y asegurar niveles lógicos correctos.
+        </p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ── BANNER 3 ── -->
+<div class="banner-section">
+  <div class="banner-bg">
+    <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1400&q=80" alt="código binario matrix"/>
+  </div>
+  <div class="banner-overlay"></div>
+  <div class="banner-text">
+    <h2>Del bit al voltio, del voltio al bit</h2>
+    <p>
+      Los convertidores de protocolo y nivel lógico son invisibles para el usuario final,
+      pero su correcto diseño determina la confiabilidad, velocidad y seguridad de cualquier sistema digital.
+    </p>
+  </div>
+</div>
+
+<!-- ── ARTÍCULO 5: NUMÉRICOS ── -->
+<section id="numericos">
+  <div class="container">
+    <div class="section-header">
+      <h2>5. Convertidores Numéricos y de Formato</h2>
+      <div class="divider"></div>
+      <p>La conversión también ocurre en el software: formatos, bases y representaciones.</p>
+    </div>
+    <article class="article">
+      <div class="article-hero">
+        <img src="https://images.unsplash.com/photo-1509228468518-180dd4864904?w=900&q=80" alt="código programación binario"/>
+        <div class="article-hero-overlay">
+          <h3>Binario, Hexadecimal, BCD, IEEE 754</h3>
+        </div>
+      </div>
+      <div class="article-body">
+        <span class="tag">Software</span>
+        <p>
+          A nivel lógico y de software, los sistemas computacionales realizan constantemente
+          conversiones numéricas entre distintas representaciones:
+        </p>
+        <h4>Conversión de bases numéricas</h4>
+        <div class="formula">
+          Decimal 255  →  Binario: 1111 1111
+                       →  Hexadecimal: 0xFF
+                       →  Octal: 377
+                       →  BCD: 0010 0101 0101
+        </div>
+        <h4>Punto flotante IEEE 754</h4>
+        <p>
+          El estándar IEEE 754 define cómo los procesadores representan números reales en binario.
+          Un float de 32 bits se descompone en signo (1 bit), exponente (8 bits) y mantisa (23 bits).
+          Errores de conversión en este nivel pueden causar bugs sutiles en software científico y financiero.
+        </p>
+        <div class="article-img-row">
+          <figure>
+            <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&q=80" alt="programación código"/>
+            <figcaption>Conversión de tipos en lenguajes de programación</figcaption>
+          </figure>
+          <figure>
+            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&q=80" alt="laptop código"/>
+            <figcaption>Representación IEEE 754 en depuración</figcaption>
+          </figure>
+        </div>
+        <h4>Conversión de formatos de datos</h4>
+        <p>
+          En desarrollo de software, los convertidores de formato (JSON ↔ XML, UTF-8 ↔ UTF-16,
+          Base64, Protobuf) son esenciales para la interoperabilidad entre sistemas y APIs.
+        </p>
+        <div class="highlight-box">
+          🖥️ <strong>Ejemplo práctico:</strong> Al recibir datos de un sensor IoT en formato binario compacto (Protobuf),
+          el servidor los convierte a JSON para la API REST, y luego a UTF-8 para almacenamiento en base de datos.
+          Tres conversiones de formato en un solo flujo de datos.
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ── ARTÍCULO 6: APLICACIONES ── -->
+<section id="aplicaciones">
+  <div class="container">
+    <div class="section-header">
+      <h2>6. Aplicaciones en Ingeniería de Sistemas</h2>
+      <div class="divider"></div>
+      <p>Casos de uso reales donde los convertidores son protagonistas.</p>
+    </div>
+    <article class="article">
+      <div class="article-hero">
+        <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=900&q=80" alt="robot inteligencia artificial IoT"/>
+        <div class="article-hero-overlay">
+          <h3>IoT, Robótica, IA Embebida y Edge Computing</h3>
+        </div>
+      </div>
+      <div class="article-body">
+        <span class="tag">Aplicaciones</span>
+        <h4>Internet de las Cosas (IoT)</h4>
+        <p>
+          Un nodo IoT típico integra: ADC para leer sensores analógicos, convertidor DC-DC para
+          gestionar la batería, convertidor UART-USB para programación, y un conversor de protocolo
+          para enviar datos vía MQTT o LoRaWAN.
+        </p>
+        <div class="article-img-row">
+          <figure>
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80" alt="IoT nodo"/>
+            <figcaption>Nodo IoT con múltiples convertidores integrados</figcaption>
+          </figure>
+          <figure>
+            <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&q=80" alt="robot brazo"/>
+            <figcaption>Robot industrial con convertidores de potencia y señal</figcaption>
+          </figure>
+          <figure>
+            <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80" alt="edge computing"/>
+            <figcaption>Edge computing: IA con acelerador neuronal integrado</figcaption>
+          </figure>
+        </div>
+        <h4>Inteligencia Artificial Embebida</h4>
+        <p>
+          Los aceleradores de IA (NPU) como el Google Edge TPU o el Apple Neural Engine incorporan
+          convertidores de cuantización: transforman modelos de punto flotante (FP32) a enteros de 8 bits
+          (INT8), reduciendo el tamaño del modelo hasta 4× y acelerando la inferencia.
+        </p>
+        <div class="formula">
+          Cuantización: Q(x) = round(x / scale) + zero_point
+          Dequantización: x̂ = (Q − zero_point) × scale
+        </div>
+        <h4>Automoción y Sistemas Críticos</h4>
+        <p>
+          Los automóviles eléctricos emplean convertidores DC-DC de alta potencia (400 V → 12 V),
+          inversores AC para el motor, y redes CAN con convertidores de protocolo. La seguridad
+          funcional (ISO 26262) exige redundancia y monitoreo continuo de cada convertidor.
+        </p>
+        <div class="highlight-box">
+          🚗 <strong>Caso Tesla Model 3:</strong> El inversor de 3 fases convierte los 350 V DC
+          de la batería en AC trifásico variable para el motor de inducción, con potencia de pico
+          superior a 250 kW y eficiencia del 97%.
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ── BANNER FINAL ── -->
+<div class="banner-section">
+  <div class="banner-bg">
+    <img src="https://images.unsplash.com/photo-1639762681057-408e52192e55?w=1400&q=80" alt="tecnología futurista"/>
+  </div>
+  <div class="banner-overlay"></div>
+  <div class="banner-text">
+    <h2>El futuro de los convertidores</h2>
+    <p>
+      Con el avance de los semiconductores de GaN y SiC, la integración monolítica y la
+      gestión de energía impulsada por IA, los convertidores del mañana serán más pequeños,
+      eficientes e inteligentes que nunca.
+    </p>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <img
+    class="footer-logo"
+    src="https://i.postimg.cc/ZRSt6K3F/LOGOTIPO-HORIZONTAL-Mesa-de-trabajo-1-768x994.png"
+    alt="Logo"
+  />
+  <h3>Zuri Saday Bonilla Lazcano</h3>
+  <p>Ingeniería en Sistemas Computacionales</p>
+  <p style="margin-top:.5rem;opacity:.6;font-size:.82rem;">
+    Blog académico sobre convertidores — 2025
+  </p>
+</footer>
+
+<script>
+  // Barra de progreso de lectura
+  window.addEventListener('scroll', () => {
+    const scroll = window.scrollY;
+    const height = document.body.scrollHeight - window.innerHeight;
+    document.getElementById('progress-bar').style.width = (scroll / height * 100) + '%';
+  });
+</script>
+</body>
+</html>
